@@ -273,9 +273,21 @@
         map.add(usairportsLayer);
         map.add(heliportsLayer);
 
+         // Adding a custom renderer to use an image for the points
+         const MyAirportsrenderer = {
+          type: "simple",
+          symbol: {
+            type: "picture-marker",
+            url: "favorite.png", 
+            width: "18px",
+            height: "18px"
+          }
+        } 
+        
         // Adding the const for the feature layer
         const myAirports = new FeatureLayer({
           url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/MyAirportsJSWrite/FeatureServer",
+          renderer: heliportRenderer,
           
           // Adding the popup here
           outFields: ["AirportCode"],
@@ -297,6 +309,8 @@
 
         // Add the widget to the view
         view.ui.add(editor, "top-right");
+
+       
 
       });
     </script>
