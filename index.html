@@ -323,9 +323,6 @@
           ]
         });
 
-        // Add the legend to the view
-        view.ui.add(mapLegend, "bottom-left");
-
         // Adding the const for the feature layer
         const myAirports = new FeatureLayer({
           url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/MyAirportsJSWrite/FeatureServer",
@@ -352,7 +349,8 @@
 
         // Add the widget to the view
         view.ui.add(editor, "top-right");
-
+        // Add the legend to the view
+        view.ui.add(mapLegend, "bottom-left");
       });
     </script>
   </head>
