@@ -273,8 +273,8 @@
         map.add(usairportsLayer);
         map.add(heliportsLayer);
 
-         // Adding a custom renderer to use an image for the points
-         const MyAirportsRenderer = {
+         // Adding a custom renderer to use an image for the points (Challenge #1)
+         const myAirportsRenderer = {
           type: "simple",
           symbol: {
             type: "picture-marker",
@@ -284,10 +284,30 @@
           }
         } 
         
+        const myAirportsLabels = {
+          symbol: {
+            type: "text",
+            color: "#0000FF",
+            haloColor: "#5E8D74",
+            haloSize: "2px",
+            font: {
+              size: "12px",
+              family: "Noto Sans",
+              style: "italic",
+              weight: "normal"
+            }
+          },
+          labelPlacement: "above-center",
+          labelExpressionInfo: {
+            expression: "Testing"
+          }
+        };
+
         // Adding the const for the feature layer
         const myAirports = new FeatureLayer({
           url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/MyAirportsJSWrite/FeatureServer",
-          renderer: MyAirportsRenderer,
+          renderer: myAirportsRenderer,
+          labelingInfo: [myAirportsLabels],
           
           // Adding the popup here
           outFields: ["AirportCode"],
@@ -309,8 +329,6 @@
 
         // Add the widget to the view
         view.ui.add(editor, "top-right");
-
-       
 
       });
     </script>
