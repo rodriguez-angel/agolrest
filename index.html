@@ -274,8 +274,8 @@
         map.add(usairportsLayer);
         map.add(heliportsLayer);
 
-         // Adding a custom renderer to use an image for the points (Challenge #1)
-         const myAirportsRenderer = {
+        // Adding a custom renderer to use an image for the points (Challenge #1)
+        const myAirportsRenderer = {
           type: "simple",
           symbol: {
             type: "picture-marker",
@@ -283,8 +283,8 @@
             width: "18px",
             height: "18px"
           }
-        } 
-        
+        };
+
         // Adding a label for the airport code to the points (Challenge #2)
         const myAirportsLabels = {
           symbol: {
@@ -312,7 +312,7 @@
           labelingInfo: [myAirportsLabels],
           
           // Adding the popup here
-          outFields: ["AirportCode"],
+          outFields: ["AirportCode"]
         });
 
         // Adding the feature layer to the map
@@ -337,21 +337,21 @@
           view: view,
           layerInfos: [
             {
+              layer: myAirports,
+              title: "My Airports"
+            },  
+            {
               layer: usairportsLayer,
               title: "Airports"
             },
             {
               layer: heliportsLayer,
               title: "Heliports"
-            },
-            {
-              layer: myAirports,
-              title: "My Airports"
             }
           ]
         });
 
-        view.ui.add(mapLegend, "bottom-left");
+        view.ui.add(mapLegend, "bottom-right");
       });
     </script>
   </head>
