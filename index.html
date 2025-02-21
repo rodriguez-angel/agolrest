@@ -209,6 +209,11 @@
           content: "<b>City: </b>{City}<br> <b>FID:</b> {FID}<br>"
         };
 
+        const popupHeliports = {
+          title: "Heliports",
+          content: "<b>City: </b>{City}<br> <b>FID:</b> {FID}<br>"
+        };
+
         const airportLabels = {
           symbol: {
             type: "text",
@@ -262,7 +267,7 @@
           renderer: heliportRenderer, // Icon for heliports
           definitionExpression: "Fac_Type = 'HELIPORT'", // SQL filter for heliports
           labelingInfo: [heliportLabels], // Labels for heliports
-          popupTemplate: popupAirports
+          popupTemplate: popupHeliports
         });
 
         map.add(usairportsLayer);
