@@ -253,6 +253,7 @@
           renderer: airportRenderer, // Icon for airports
           definitionExpression: "Fac_Type = 'AIRPORT'", // SQL filter for airports
           labelingInfo: [airportLabels], // Labels for airports
+          popupTemplate: popupAirports // Popup for airports
         });
 
         const heliportsLayer = new FeatureLayer({
