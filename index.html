@@ -35,12 +35,15 @@
         "esri/widgets/Editor"
       ], function(esriConfig, Map, MapView, Graphic, GraphicsLayer, Polyline, Polygon, FeatureLayer, Editor) {
         
+        // Set the API key for ArcGIS
         esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurMDO2Lvg3fqfK_WEnH5iFTMBraaeXiSHJGRbnr1Zs4Isr4QgtEWFLCgjEyJUqKPiF1twAE7x6mEbufhgGS8kDfdHZrm-MxCYabUC4R4l1qsZ41mzL6Or0hSE4dkXf_yST7bEx29lJkvmLZa5L6lxxauEogtg-aafqVSunqkSD9MFqBnsg6KGrMADv7SZEjDdrTjOkdGIkev0d6XLanocxs2I9M7C0otsi3fKjt2gtQYJAT1_mPb6eiGn";
 
+        // Create a new map with a gray vector basemap
         const map = new Map({
           basemap: "gray-vector"
         });
 
+        // Create a new MapView and set its properties
         const view = new MapView({
           container: "viewDiv",
           map: map,
@@ -48,10 +51,11 @@
           zoom: 10
         });
 
+        // Create a GraphicsLayer and add it to the map
         const graphicsLayer = new GraphicsLayer();
         map.add(graphicsLayer);
 
-        // Start of Point Graphic
+        // Add a point graphic to the map
         const point = {
           type: "point",
           longitude: -97.750689,
@@ -86,9 +90,8 @@
         });
 
         graphicsLayer.add(pointGraphic);
-        // End of Point Graphic
 
-        // Start of polylines
+        // Add a polyline graphic to the map
         let paths = [
           [  // square path
             [-97.751689, 30.264098],
@@ -118,9 +121,8 @@
         });
 
         graphicsLayer.add(polylineGraphic);
-        // End of polylines
-      
-        // Start of Polygons
+
+        // Add a polygon graphic to the map
         const polygonRings = [
           [-97.750689, 30.263598], // Top
           [-97.751189, 30.263298], // Top-left
@@ -150,63 +152,63 @@
         });
 
         graphicsLayer.add(polygonGraphic);
-        // End of Polygons
 
-        // Start of Feature Layer (Part 4)
+        // Add a feature layer for educational institutions
         const popupEduusa = {
-          "title": "EDUs",
-          "content": "<b>Name:</b> {INSTNM}<br><b>Street address or post office box:</b> {ADDR}<br><b>Website:</b> <a href='{WEBADDR}' target='_blank'>{WEBADDR}</a><br>"
-        }
-        
+          title: "EDUs",
+          content: "<b>Name:</b> {INSTNM}<br><b>Street address or post office box:</b> {ADDR}<br><b>Website:</b> <a href='{WEBADDR}' target='_blank'>{WEBADDR}</a><br>"
+        };
+
         const usaeduLayer = new FeatureLayer({
           url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
-          outFields: ["INSTNM","ADDR","WEBADDR"],
+          outFields: ["INSTNM", "ADDR", "WEBADDR"],
           popupTemplate: popupEduusa
         });
 
-        //adding the feature layer to the map
         map.add(usaeduLayer);
 
+        // Add feature layers for airports and heliports
         const airportRenderer = {
-          "type": "simple",
-          "symbol": {
-            "type": "picture-marker",
-            "url": "https://sounny.github.io/agol/outline_local_airport_black_24dp.png",
-            "width": "18px",
-            "height": "18px"
+          type: "simple",
+          symbol: {
+            type: "picture-marker",
+            url: "https://sounny.github.io/agol/outline_local_airport_black_24dp.png",
+            width: "18px",
+            height: "18px"
           }
         };
-        
+
         const heliportRenderer = {
-          "type": "simple",
-          "symbol": {
-            "type": "picture-marker",
-            "url": "635717.png",
-            "width": "18px",
-            "height": "18px"
+          type: "simple",
+          symbol: {
+            type: "picture-marker",
+            url: "635717.png",
+            width: "18px",
+            height: "18px"
           }
         };
 
         const airportLayer = new FeatureLayer({
           url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports/FeatureServer",
           renderer: airportRenderer,
-          definitionExpression: "Fac_Type IN ('AIRPORT')" //adding sql to filter for airports
+          definitionExpression: "Fac_Type IN ('AIRPORT')" // SQL filter for airports
         });
 
         const heliportLayer = new FeatureLayer({
           url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports/FeatureServer",
           renderer: heliportRenderer,
-          definitionExpression: "Fac_Type IN ('HELIPORT')" //adding sql to filter for heliports
+          definitionExpression: "Fac_Type IN ('HELIPORT')" // SQL filter for heliports
         });
 
         map.add(airportLayer);
         map.add(heliportLayer);
 
+        // Add feature layers with labels for airports and heliports
         const popupAirports = {
-          "title": "Airports",
-          "content": "<b>City: </b>{City}<br> <b>FID:</b> {FID}<br>"
+          title: "Airports",
+          content: "<b>City: </b>{City}<br> <b>FID:</b> {FID}<br>"
         };
-        
+
         const airportLabels = {
           symbol: {
             type: "text",
@@ -248,24 +250,22 @@
         const usairportsLayer = new FeatureLayer({
           url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/MyAirportsNamesAreTaken/FeatureServer",
           outFields: ["City", "FID"],
-          renderer: airportRenderer, //calling the icon
-          definitionExpression: "Fac_Type = 'AIRPORT'", //adding sql to filter for airports
-          labelingInfo: [airportLabels], //adding the labels
+          renderer: airportRenderer, // Icon for airports
+          definitionExpression: "Fac_Type = 'AIRPORT'", // SQL filter for airports
+          labelingInfo: [airportLabels], // Labels for airports
         });
-    
+
         const heliportsLayer = new FeatureLayer({
           url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/MyAirportsNamesAreTaken/FeatureServer",
           outFields: ["City", "FID"],
-          renderer: heliportRenderer, //calling the icon
-          definitionExpression: "Fac_Type = 'HELIPORT'", //adding sql to filter for heliports
-          labelingInfo: [heliportLabels], //adding the labels
+          renderer: heliportRenderer, // Icon for heliports
+          definitionExpression: "Fac_Type = 'HELIPORT'", // SQL filter for heliports
+          labelingInfo: [heliportLabels], // Labels for heliports
           popupTemplate: popupAirports
         });
 
         map.add(usairportsLayer);
         map.add(heliportsLayer);
-        // End of Feature Layer (Part 5)
-
       });
     </script>
   </head>
