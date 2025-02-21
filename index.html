@@ -317,11 +317,14 @@
               title: "Heliports"
             },
             {
-              layer: heliportsLayer,
-              title: "Heliports"
+              layer: myAirports,
+              title: "My Airports"
             }
           ]
         });
+
+        // Add the legend to the view
+        view.ui.add(mapLegend, "bottom-left");
 
         // Adding the const for the feature layer
         const myAirports = new FeatureLayer({
